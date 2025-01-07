@@ -17,32 +17,32 @@ public class PlayerNoteScript : MonoBehaviour
     {
         if (activeNote != null)
         {
-            if (Input.GetKeyDown("e"))
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 activeNote.ToggleNote();
-                interactionMessage?.SetActive(false);
+                interactionMessage.SetActive(false);
             }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Note")
+        if (other.gameObject.CompareTag("Note"))
         {
             other.gameObject.TryGetComponent(out activeNote);
-            interactionMessage?.SetActive(true);
+            interactionMessage.SetActive(true);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Note")
+        if (other.gameObject.CompareTag("Note"))
         {
             if (activeNote.GetNoteStatus())
                 activeNote.ToggleNote();
 
             activeNote = null;
-            interactionMessage?.SetActive(false);
+            interactionMessage.SetActive(false);
         }
     }
 }
