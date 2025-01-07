@@ -60,6 +60,7 @@ _ReSharper*/
 # ===================================== #
 [Ee]xported[Oo]bj/
 .vs/
+.vsconfig
 *.csproj
 *.userprefs
 *.pidb
@@ -68,6 +69,7 @@ _ReSharper*/
 *.user
 *.unityproj
 *.booproj
+*.htm
  
 # ============ #
 # OS generated #
@@ -89,3 +91,6 @@ ehthumbs.db
 
 [Bb]uilds/
 [Rr]ecordings/
+
+/[Uu]ser[Ss]ettings/
+/[Ll]ogs/
