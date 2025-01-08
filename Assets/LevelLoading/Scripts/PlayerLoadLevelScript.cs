@@ -1,15 +1,10 @@
+using TMPro;
 using UnityEngine;
 
 public class PlayerLoadLevelScript : MonoBehaviour
 {
+    public TMP_Text interactionMessage;
     private LoadLevelScript loadLevelTrigger;
-    private GameObject interactionMessage;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        interactionMessage = GameObject.Find("InteractionMessage");
-    }
 
     // Update is called once per frame
     void Update()
@@ -19,7 +14,7 @@ public class PlayerLoadLevelScript : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 loadLevelTrigger.LoadLevelAsync();
-                interactionMessage.SetActive(false);
+                interactionMessage.enabled = false;
             }
         }
     }
@@ -29,7 +24,7 @@ public class PlayerLoadLevelScript : MonoBehaviour
         if (other.gameObject.CompareTag("LoadLevel"))
         {
             other.gameObject.TryGetComponent(out loadLevelTrigger);
-            interactionMessage.SetActive(true);
+            interactionMessage.enabled = true;
         }
     }
 
@@ -38,7 +33,7 @@ public class PlayerLoadLevelScript : MonoBehaviour
         if (other.gameObject.CompareTag("LoadLevel"))
         {
             loadLevelTrigger = null;
-            interactionMessage.SetActive(false);
+            interactionMessage.enabled = false;
         }
     }
 }
