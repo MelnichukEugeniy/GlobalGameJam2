@@ -6,47 +6,47 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private ProneState _proneState;
-    private CrouchState _crouchState;
-    private DefaultPoseState _defaultPoseState;
+    private ProneState proneState;
+    private CrouchState crouchState;
+    private DefaultPoseState defaultPoseState;
     
-    private StateMachine _movementStateMachine;
+    private StateMachine movementStateMachine;
 
     [SerializeField] 
-    private MovementSharedValues _sharedValues;
+    private MovementSharedValues sharedValues;
     
     private void Awake()
     {
-        _sharedValues.Transform = transform;
-        _sharedValues.OriginalHeight = _sharedValues.Collider.height;
-        _sharedValues.OriginalCenter = _sharedValues.Collider.center;
-        _sharedValues.TargetHeight = _sharedValues.OriginalHeight;
-        _sharedValues.TargetCenter = _sharedValues.OriginalCenter;
+        sharedValues.Transform = transform;
+        sharedValues.OriginalHeight = sharedValues.Collider.height;
+        sharedValues.OriginalCenter = sharedValues.Collider.center;
+        sharedValues.TargetHeight = sharedValues.OriginalHeight;
+        sharedValues.TargetCenter = sharedValues.OriginalCenter;
         
-        _movementStateMachine = new StateMachine();
+        movementStateMachine = new StateMachine();
 
-        _proneState = new ProneState(_sharedValues);
-        _crouchState = new CrouchState(_sharedValues);
-        _defaultPoseState = new DefaultPoseState(_sharedValues);
+        proneState = new ProneState(sharedValues);
+        crouchState = new CrouchState(sharedValues);
+        defaultPoseState = new DefaultPoseState(sharedValues);
         
-        _movementStateMachine.SetState(_defaultPoseState);
+        movementStateMachine.SetState(defaultPoseState);
 
-        _movementStateMachine.AddAnyTransition(_proneState, () => _sharedValues.Input.IsProne());
-        _movementStateMachine.AddAnyTransition(_crouchState, () => _sharedValues.Input.IsCrouch());
-        _movementStateMachine.AddAnyTransition(_defaultPoseState, () => !_sharedValues.Input.AskToChangePose());
+        movementStateMachine.AddAnyTransition(proneState, () => sharedValues.Input.IsProne());
+        movementStateMachine.AddAnyTransition(crouchState, () => sharedValues.Input.IsCrouch());
+        movementStateMachine.AddAnyTransition(defaultPoseState, () => !sharedValues.Input.AskToChangePose());
     }
 
     private void Update()
     {
-        _movementStateMachine.Tick();
+        movementStateMachine.Tick();
     }
 
     private void OnDrawGizmosSelected()
     {
-        if(_sharedValues.Transform == null)
+        if(sharedValues.Transform == null)
             return;
-        var ray = new Ray(_sharedValues.Transform.position - _sharedValues.OriginalCenter, -_sharedValues.Transform.up * _sharedValues.OriginalHeight / 2f);
-        Gizmos.color = _movementStateMachine.GetGizmoColor();
+        var ray = new Ray(sharedValues.Transform.position - sharedValues.OriginalCenter, -sharedValues.Transform.up * sharedValues.OriginalHeight / 2f);
+        Gizmos.color = movementStateMachine.GetGizmoColor();
         Gizmos.DrawRay(ray);
     }
 }
