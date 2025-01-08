@@ -57,8 +57,10 @@ namespace Player.Movement.States
 
         protected bool IsGrounded()
         {
-            var ray = new Ray(SharedValues.Transform.position - SharedValues.OriginalCenter, -SharedValues.Transform.up * SharedValues.OriginalHeight / 2f);
-            return Physics.Raycast(ray);
+            var ray = new Ray(SharedValues.Transform.position - SharedValues.OriginalCenter, -SharedValues.Transform.up);
+            bool result = Physics.Raycast(ray, out RaycastHit _, SharedValues.OriginalHeight / 1.9f, Config.GroundMask, QueryTriggerInteraction.Ignore);
+            
+            return result;
         }
 
         public virtual void OnEnter()

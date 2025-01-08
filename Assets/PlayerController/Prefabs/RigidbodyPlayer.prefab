@@ -626,6 +626,9 @@ MonoBehaviour:
     Input: {fileID: 11400000, guid: cbcc53cc046ddcd4bb895afebe5621b0, type: 2}
     Collider: {fileID: 2877542962600284387}
     Rigidbody: {fileID: 4254189245502065310}
+    GroundMask:
+      serializedVersion: 2
+      m_Bits: 55
 --- !u!114 &5606648199573608200
 MonoBehaviour:
   m_ObjectHideFlags: 0
