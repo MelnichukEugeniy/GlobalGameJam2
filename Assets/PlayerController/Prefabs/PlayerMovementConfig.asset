@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 500
   RunSpeed: 800
-  JumpForce: 10
+  JumpForce: 5
   CrouchSpeed: 350
   ProneSpeed: 200
   TransitionSpeed: 3
@@ -22,3 +22,6 @@ MonoBehaviour:
   ProneHeight: 0.8
   CrouchCenter: {x: 0, y: 0.1, z: 0}
   ProneCenter: {x: 0, y: 0.7, z: 0}
+  GroundMask:
+    serializedVersion: 2
+    m_Bits: 55
