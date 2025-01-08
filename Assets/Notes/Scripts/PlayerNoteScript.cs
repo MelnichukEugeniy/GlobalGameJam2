@@ -1,15 +1,15 @@
+using TMPro;
 using UnityEngine;
 
 public class PlayerNoteScript : MonoBehaviour
 {
+    public TMP_Text interactionMessage;
     private NoteScript activeNote;
-    private GameObject interactionMessage;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        interactionMessage = GameObject.Find("InteractionMessage");
-        interactionMessage.SetActive(false);
+        interactionMessage.enabled = false;
     }
 
     // Update is called once per frame
@@ -20,7 +20,7 @@ public class PlayerNoteScript : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 activeNote.ToggleNote();
-                interactionMessage.SetActive(false);
+                interactionMessage.enabled = false;
             }
         }
     }
@@ -30,7 +30,7 @@ public class PlayerNoteScript : MonoBehaviour
         if (other.gameObject.CompareTag("Note"))
         {
             other.gameObject.TryGetComponent(out activeNote);
-            interactionMessage.SetActive(true);
+            interactionMessage.enabled = true;
         }
     }
 
@@ -42,7 +42,7 @@ public class PlayerNoteScript : MonoBehaviour
                 activeNote.ToggleNote();
 
             activeNote = null;
-            interactionMessage.SetActive(false);
+            interactionMessage.enabled = false;
         }
     }
 }
