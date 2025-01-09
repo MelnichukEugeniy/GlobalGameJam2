@@ -11,9 +11,9 @@ namespace Player.Movement.States
         {
             base.OnEnter();
             
-            SharedValues.TargetHeight = Config.CrouchHeight;
-            SharedValues.TargetCenter = Config.CrouchCenter;
-            SharedValues.CurrentSpeed = Config.CrouchSpeed;
+            sharedValues.TargetHeight = config.CrouchHeight;
+            sharedValues.TargetCenter = config.CrouchCenter;
+            sharedValues.CurrentSpeed = config.CrouchSpeed;
         }
     }
 }

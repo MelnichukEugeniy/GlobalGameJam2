@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Player.Movement.States
 {
     public class ProneState : MovementState
@@ -10,9 +12,36 @@ namespace Player.Movement.States
         {
             base.OnEnter();
             
-            SharedValues.TargetHeight = Config.ProneHeight;
-            SharedValues.TargetCenter = Config.ProneCenter;
-            SharedValues.CurrentSpeed = Config.ProneSpeed;
+            sharedValues.TargetHeight = config.CrouchHeight;
+            sharedValues.TargetCenter = config.CrouchCenter;
+            sharedValues.CurrentSpeed = config.CrouchSpeed;
+        }
+
+        private float _timer;
+
+        public override void Tick()
+        {
+            base.Tick();
+
+            if (_timer > config.TransitionSpeed)
+            {
+                sharedValues.TargetHeight = config.ProneHeight;
+                sharedValues.TargetCenter = config.ProneCenter;
+                sharedValues.CurrentSpeed = config.ProneSpeed;
+            }
+            else
+            {
+                _timer += Time.deltaTime;
+            }
+
+            controller.hasModifiableContacts = true;
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+
+            _timer = 0;
         }
     }
 }
