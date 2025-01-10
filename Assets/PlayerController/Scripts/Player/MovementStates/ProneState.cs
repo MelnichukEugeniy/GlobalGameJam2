@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Player.Movement.States
 {
     public class ProneState : MovementState
@@ -10,9 +12,16 @@ namespace Player.Movement.States
         {
             base.OnEnter();
             
-            SharedValues.TargetHeight = Config.ProneHeight;
-            SharedValues.TargetCenter = Config.ProneCenter;
-            SharedValues.CurrentSpeed = Config.ProneSpeed;
+            sharedValues.TargetHeight = config.ProneHeight;
+            sharedValues.TargetCenter = config.ProneCenter;
+            sharedValues.CurrentSpeed = config.ProneSpeed;
+        }
+
+        public override void Tick()
+        {
+            sharedValues.CurrentSpeed = config.ProneSpeed;
+            
+            base.Tick();
         }
     }
 }

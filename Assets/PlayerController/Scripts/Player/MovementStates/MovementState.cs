@@ -6,61 +6,56 @@ namespace Player.Movement.States
 {
     public abstract class MovementState : IState
     {
-        protected float CurrentSpeed
+        protected float currentSpeed
         {
-            get => SharedValues.CurrentSpeed;
-            set => SharedValues.CurrentSpeed = value;
+            get => sharedValues.CurrentSpeed;
+            set => sharedValues.CurrentSpeed = value;
         }
 
-        protected PlayerMovementConfig Config => SharedValues.Config;
-        protected PlayerMovementInput Input => SharedValues.Input;
-        protected CapsuleCollider Collider => SharedValues.Collider;
-        protected Rigidbody Rigidbody => SharedValues.Rigidbody;
+        protected PlayerMovementConfig config => sharedValues.Config;
+        protected PlayerMovementInput input => sharedValues.Input;
+        protected CharacterController controller => sharedValues.CharacterController;
 
-        protected MovementSharedValues SharedValues;
+        protected MovementSharedValues sharedValues;
         
         public MovementState(MovementSharedValues sharedValues)
         {
-            SharedValues = sharedValues;
+            this.sharedValues = sharedValues;
         }
 
         public virtual void Tick()
         {
-            // Плавне оновлення висоти та центру
-            Collider.center = Vector3.Lerp(Collider.center, SharedValues.TargetCenter, Time.deltaTime * Config.TransitionSpeed);
-            Collider.height = Mathf.Lerp(Collider.height, SharedValues.TargetHeight, Time.deltaTime * Config.TransitionSpeed);
+            controller.center = Vector3.Lerp(controller.center, sharedValues.TargetCenter, Time.deltaTime * config.TransitionSpeed);
+            controller.height = Mathf.Lerp(controller.height, sharedValues.TargetHeight, Time.deltaTime * config.TransitionSpeed);
 
-            // Рух
-            float deltax = Input.GetHorizontal() * SharedValues.CurrentSpeed;
-            float deltaz = Input.GetVertical() * SharedValues.CurrentSpeed;
-
+            var headLocalPosition = sharedValues.HeadTransform.localPosition;
+            headLocalPosition.y = controller.height / 2f;
+            sharedValues.HeadTransform.localPosition = headLocalPosition + config.HeadOffset;
+            
+            float deltax = input.GetHorizontal() * currentSpeed;
+            float deltaz = input.GetVertical() * currentSpeed;
+            
             Vector3 movement = new Vector3(deltax, 0, deltaz);
 
-            // Стрибок
-            if (Input.IsJumping() && Mathf.Abs(Collider.height - SharedValues.OriginalHeight) < 0.1f)
+            if (controller.isGrounded)
             {
-                if (IsGrounded())
+                sharedValues.VerticalVelocity = -1f;
+
+                if (input.IsJumping() && Mathf.Abs(controller.height - sharedValues.OriginalHeight) < 0.1f)
                 {
-                    Debug.Log("Jump");
-                    // Стрибок можливий тільки у звичайному стані
-                    Rigidbody.AddForce(Vector3.up * Config.JumpForce, ForceMode.Impulse);
+                    sharedValues.VerticalVelocity = config.JumpForce;
                 }
             }
-
-            movement = Vector3.ClampMagnitude(movement, SharedValues.CurrentSpeed);
+            else
+            {
+                sharedValues.VerticalVelocity += config.Gravity * Time.deltaTime;
+            }
+            
+            movement.y = sharedValues.VerticalVelocity;
 
             movement *= Time.deltaTime;
-            movement = SharedValues.Transform.TransformDirection(movement);
-            movement.y = Rigidbody.linearVelocity.y;
-            Rigidbody.linearVelocity = movement;
-        }
-
-        protected bool IsGrounded()
-        {
-            var ray = new Ray(SharedValues.Transform.position - SharedValues.OriginalCenter, -SharedValues.Transform.up);
-            bool result = Physics.Raycast(ray, out RaycastHit _, SharedValues.OriginalHeight / 1.9f, Config.GroundMask, QueryTriggerInteraction.Ignore);
-            
-            return result;
+            movement = sharedValues.Transform.TransformDirection(movement);
+            controller.Move(movement);
         }
 
         public virtual void OnEnter()

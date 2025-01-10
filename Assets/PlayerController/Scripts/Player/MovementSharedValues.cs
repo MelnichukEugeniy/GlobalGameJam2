@@ -13,6 +13,8 @@ namespace Player
         public float TargetHeight;
         [HideInInspector]
         public Vector3 TargetCenter;
+        [HideInInspector]
+        public float VerticalVelocity;
         
         [HideInInspector]
         public float OriginalHeight;
@@ -25,7 +27,7 @@ namespace Player
         public PlayerMovementConfig Config;
         public PlayerMovementInput Input;
 
-        public CapsuleCollider Collider;
-        public Rigidbody Rigidbody;
+        public Transform HeadTransform;
+        public CharacterController CharacterController;
     }
 }
