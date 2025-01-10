@@ -6,12 +6,12 @@ public class LoadLevelScript : MonoBehaviour
 {
     public string levelToLoad;
     public TMP_Text percentLoaded;
-    private GameObject loadingMessage;
+    public TMP_Text loadingMessage;
     private AsyncOperation loadingOperation;
 
     public void LoadLevelAsync()
     {
-        loadingMessage.SetActive(true);
+        loadingMessage.enabled = true;
 
         loadingOperation = SceneManager.LoadSceneAsync(levelToLoad);
     }
@@ -20,8 +20,7 @@ public class LoadLevelScript : MonoBehaviour
 
     private void Start()
     {
-        loadingMessage = GameObject.Find("LoadingMessage");
-        loadingMessage.SetActive(false);
+        loadingMessage.enabled = false;
     }
 
     void Update()
