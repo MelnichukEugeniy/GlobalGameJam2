@@ -12,36 +12,16 @@ namespace Player.Movement.States
         {
             base.OnEnter();
             
-            sharedValues.TargetHeight = config.CrouchHeight;
-            sharedValues.TargetCenter = config.CrouchCenter;
-            sharedValues.CurrentSpeed = config.CrouchSpeed;
+            sharedValues.TargetHeight = config.ProneHeight;
+            sharedValues.TargetCenter = config.ProneCenter;
+            sharedValues.CurrentSpeed = config.ProneSpeed;
         }
-
-        private float _timer;
 
         public override void Tick()
         {
+            sharedValues.CurrentSpeed = config.ProneSpeed;
+            
             base.Tick();
-
-            if (_timer > config.TransitionSpeed)
-            {
-                sharedValues.TargetHeight = config.ProneHeight;
-                sharedValues.TargetCenter = config.ProneCenter;
-                sharedValues.CurrentSpeed = config.ProneSpeed;
-            }
-            else
-            {
-                _timer += Time.deltaTime;
-            }
-
-            controller.hasModifiableContacts = true;
-        }
-
-        public override void OnExit()
-        {
-            base.OnExit();
-
-            _timer = 0;
         }
     }
 }

@@ -16,4 +16,6 @@ public class PlayerMovementConfig : ScriptableObject
 
     public Vector3 CrouchCenter = new Vector3(0, 0.1f, 0); // ÷ентр при прис≥данн≥
     public Vector3 ProneCenter = new Vector3(0, 0.7f, 0); // ÷ентр при л€ганн≥
+
+    public Vector3 HeadOffset;
 }

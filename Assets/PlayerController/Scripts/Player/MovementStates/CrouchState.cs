@@ -13,7 +13,12 @@ namespace Player.Movement.States
             
             sharedValues.TargetHeight = config.CrouchHeight;
             sharedValues.TargetCenter = config.CrouchCenter;
+        }
+
+        public override void Tick()
+        {
             sharedValues.CurrentSpeed = config.CrouchSpeed;
+            base.Tick();
         }
     }
 }

@@ -28,6 +28,10 @@ namespace Player.Movement.States
             controller.center = Vector3.Lerp(controller.center, sharedValues.TargetCenter, Time.deltaTime * config.TransitionSpeed);
             controller.height = Mathf.Lerp(controller.height, sharedValues.TargetHeight, Time.deltaTime * config.TransitionSpeed);
 
+            var headLocalPosition = sharedValues.HeadTransform.localPosition;
+            headLocalPosition.y = controller.height / 2f;
+            sharedValues.HeadTransform.localPosition = headLocalPosition + config.HeadOffset;
+            
             float deltax = input.GetHorizontal() * currentSpeed;
             float deltaz = input.GetVertical() * currentSpeed;
             
