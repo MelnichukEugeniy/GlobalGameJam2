@@ -84,14 +84,13 @@ ehthumbs.db
 *.apk
 *.exe
 
+[Bb]uilds/
+[Rr]ecordings/
+
+/[Uu]ser[Ss]ettings/
+/[Ll]ogs/
+
 # ========== #
 # Exclusions #
 # ========== #
 !*.obj
-
-[Bb]uilds/
-[Rr]ecordings/
-
-
-/[Uu]ser[Ss]ettings/
-/[Ll]ogs/
