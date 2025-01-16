@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &3638888283324552762
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 4c405de93128bfc42aeb7a951dc2346b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 280.44427
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4c405de93128bfc42aeb7a951dc2346b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 156.89554
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4c405de93128bfc42aeb7a951dc2346b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 12.7194195
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4c405de93128bfc42aeb7a951dc2346b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071067
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4c405de93128bfc42aeb7a951dc2346b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4c405de93128bfc42aeb7a951dc2346b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4c405de93128bfc42aeb7a951dc2346b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4c405de93128bfc42aeb7a951dc2346b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4c405de93128bfc42aeb7a951dc2346b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4c405de93128bfc42aeb7a951dc2346b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 4c405de93128bfc42aeb7a951dc2346b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e1b3363c02df5a542af3ec6fff61dd30, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 4c405de93128bfc42aeb7a951dc2346b, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ad58b3cf6c7403b4aa83b530a40b243e, type: 2}
+    - target: {fileID: 919132149155446097, guid: 4c405de93128bfc42aeb7a951dc2346b, type: 3}
+      propertyPath: m_Name
+      value: BrokenCylinderConcrete
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4c405de93128bfc42aeb7a951dc2346b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8446646697284197368}
+  m_SourcePrefab: {fileID: 100100000, guid: 4c405de93128bfc42aeb7a951dc2346b, type: 3}
+--- !u!1 &4521196541450988395 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 4c405de93128bfc42aeb7a951dc2346b, type: 3}
+  m_PrefabInstance: {fileID: 3638888283324552762}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &8446646697284197368
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4521196541450988395}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.009557728, y: 0.010049588, z: 0.010420737}
+  m_Center: {x: -0.004076562, y: 0.0018888947, z: -0.0029529007}
