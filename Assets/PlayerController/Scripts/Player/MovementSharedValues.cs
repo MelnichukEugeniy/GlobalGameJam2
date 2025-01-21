@@ -29,5 +29,6 @@ namespace Player
 
         public Transform HeadTransform;
         public CharacterController CharacterController;
+        public PlayerAnimator PlayerAnimator;
     }
 }
