@@ -14,7 +14,8 @@ namespace Player.Movement.States
             
             sharedValues.TargetHeight = config.ProneHeight;
             sharedValues.TargetCenter = config.ProneCenter;
-            sharedValues.CurrentSpeed = config.ProneSpeed;
+            
+            sharedValues.PlayerAnimator.SetProne(true);
         }
 
         public override void Tick()
@@ -22,6 +23,13 @@ namespace Player.Movement.States
             sharedValues.CurrentSpeed = config.ProneSpeed;
             
             base.Tick();
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+            
+            sharedValues.PlayerAnimator.SetProne(false);
         }
     }
 }
