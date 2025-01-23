@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
 
-public abstract class BasePlayerFeature : ScriptableObject
+public abstract class BasePlayerFeature : ScriptableObject, IDisposable
 {
     protected PlayerController playerController;
     
@@ -10,4 +11,6 @@ public abstract class BasePlayerFeature : ScriptableObject
     }
     
     public virtual void Update() {}
+    
+    public virtual void Dispose() {}
 }

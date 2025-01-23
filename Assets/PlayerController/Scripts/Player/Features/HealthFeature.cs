@@ -1,13 +1,12 @@
+using System;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(HealthFeature), menuName = "Player/Features/Health")]
 public class HealthFeature : BasePlayerFeature
 {
     public float Health { get; private set; }
-    public float MaxHealth { get; private set; }
-    public float HealthPercentage
-    {
-        get => Mathf.InverseLerp(0, MaxHealth, Health);
-    }
+    public float MaxHealth => config.MaxHealth;
+    public float HealthPercentage => Health / MaxHealth;
     
     public bool IsDead { get; private set; }
     
@@ -42,11 +41,17 @@ public class HealthFeature : BasePlayerFeature
 
     public void RestoreHealth(float restoreValue)
     {
+        if(Math.Abs(Health - MaxHealth) < .001f)
+            return;
+
         restoreValue = Mathf.Clamp(restoreValue, 0, restoreValue);
         if(restoreValue == 0)
             return;
 
         Health += restoreValue;
+        if (Health > MaxHealth)
+            Health = MaxHealth;
+        
         InvokePlayerHealthChanged();
     }
 
@@ -59,4 +64,21 @@ public class HealthFeature : BasePlayerFeature
     {
         EventBus<PlayerHealthChangedEvent>.Raise(new PlayerHealthChangedEvent(Health, this, playerController));
     }
+
+#if UNITY_EDITOR
+    public override void Update()
+    {
+        base.Update();
+
+        if (Input.GetKeyDown(KeyCode.KeypadMinus))
+        {
+            TakeDamage(5);
+        }
+
+        if (Input.GetKeyDown(KeyCode.KeypadPlus))
+        {
+            RestoreHealth(5);
+        }
+    }
+#endif
 }

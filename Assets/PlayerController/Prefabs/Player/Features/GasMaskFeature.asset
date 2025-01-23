@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb32ad9f1d03483085df208ae889977e, type: 3}
-  m_Name: PlayerConfig
+  m_Script: {fileID: 11500000, guid: a069772b440f9874ba89ce4e0ff49d71, type: 3}
+  m_Name: GasMaskFeature
   m_EditorClassIdentifier: 
-  <BaseHealth>k__BackingField: 100
+  config: {fileID: 11400000, guid: 2a211095070dfc44e8257e17a227fd30, type: 2}
+  playerInput: {fileID: 11400000, guid: ccd0576a2a7969b41987946c8d638aeb, type: 2}
