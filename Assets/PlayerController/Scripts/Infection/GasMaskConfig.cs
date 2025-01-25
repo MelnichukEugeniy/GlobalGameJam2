@@ -8,6 +8,9 @@ public class GasMaskConfig : ScriptableObject
 
     [field: SerializeField]
     public float FilterBarelyEndPercentage { get; private set; } = .2f;
+
+    [field: SerializeField]
+    public float BreathInSeconds { get; private set; } = 1f;
     
     [field: SerializeField]
     public AudioClip NormalBreathingWithGasMaskAudio { get; private set; }

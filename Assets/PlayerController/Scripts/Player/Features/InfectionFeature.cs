@@ -14,6 +14,7 @@ public class InfectionFeature : BasePlayerFeature
     
     private EventBinding<PlayerEnterInfectionZoneEvent> playerEnterInfectionZoneEventBinding;
     private EventBinding<PlayerExitInfectionZoneEvent> playerExitInfectionZoneEventBinding;
+    private EventBinding<GasMaskEquipChangedEvent> gasMaskEquipChangedEventBinding;
 
     public bool InInfectionZone { get; private set; }
 
@@ -26,9 +27,11 @@ public class InfectionFeature : BasePlayerFeature
         
         playerEnterInfectionZoneEventBinding = new EventBinding<PlayerEnterInfectionZoneEvent>(OnPlayerEnterInfectionZone);
         playerExitInfectionZoneEventBinding = new EventBinding<PlayerExitInfectionZoneEvent>(OnPlayerExitInfectionZone);
+        gasMaskEquipChangedEventBinding = new EventBinding<GasMaskEquipChangedEvent>(OnGasMaskEquipChanged);
         
         EventBus<PlayerEnterInfectionZoneEvent>.Register(playerEnterInfectionZoneEventBinding);
         EventBus<PlayerExitInfectionZoneEvent>.Register(playerExitInfectionZoneEventBinding);
+        EventBus<GasMaskEquipChangedEvent>.Register(gasMaskEquipChangedEventBinding);
     }
 
     private void OnPlayerEnterInfectionZone(PlayerEnterInfectionZoneEvent @event)
@@ -39,39 +42,51 @@ public class InfectionFeature : BasePlayerFeature
         InInfectionZone = true;
         if (gasMaskFeature.Equipped == false)
         {
-            StartInfection();
+            StartInfectionTick();
         }
-        Debug.Log("Player Entered Infected Zone");
     }
 
     private void OnPlayerExitInfectionZone(PlayerExitInfectionZoneEvent @event)
     {
         if(InInfectionZone == false)
             return;
-
-        StopInfection();
-        Debug.Log("Player Left Infected Zone");
+        
+        InInfectionZone = false;
+        
+        StopInfectionTick();
     }
 
-    private void StartInfection()
+    private void OnGasMaskEquipChanged(GasMaskEquipChangedEvent @event)
+    {
+        if (!InInfectionZone)
+            return;
+        
+        if (gasMaskFeature.Equipped)
+        {
+            StopInfectionTick();
+        }
+        else
+        {
+            StartInfectionTick();
+        }
+    }
+
+    private void StartInfectionTick()
     {
         _infectionCoroutine = playerController.StartCoroutine(InfectionTickRoutine());
     }
 
-    private void StopInfection()
+    private void StopInfectionTick()
     {
         if(_infectionCoroutine != null)
             playerController.StopCoroutine(_infectionCoroutine);
-
-        InInfectionZone = false;
     }
 
     private IEnumerator InfectionTickRoutine()
     {
-        while (InInfectionZone)
+        while (InInfectionZone && gasMaskFeature.Equipped == false)
         {
             yield return new WaitForSeconds(config.PeriodInSeconds);
-            
             healthFeature.TakeDamage(config.PeriodicalInfectionDamage);
         }
     }
@@ -82,5 +97,6 @@ public class InfectionFeature : BasePlayerFeature
     
         EventBus<PlayerEnterInfectionZoneEvent>.Deregister(playerEnterInfectionZoneEventBinding);
         EventBus<PlayerExitInfectionZoneEvent>.Deregister(playerExitInfectionZoneEventBinding);
+        EventBus<GasMaskEquipChangedEvent>.Deregister(gasMaskEquipChangedEventBinding);
     }
 }

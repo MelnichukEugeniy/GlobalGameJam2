@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <FilterCapacitySeconds>k__BackingField: 200
   <FilterBarelyEndPercentage>k__BackingField: 0.2
-  <NormalBreathingWithGasMaskAudio>k__BackingField: {fileID: 0}
-  <HardBreathingWithGasMaskAudio>k__BackingField: {fileID: 0}
-  <LackOfBreathingWithGasMaskAudio>k__BackingField: {fileID: 0}
-  <BreathingToxinsWithoutGasMask>k__BackingField: {fileID: 0}
+  <NormalBreathingWithGasMaskAudio>k__BackingField: {fileID: 8300000, guid: 0e799e6951ff5524fa269b5094f1edb6, type: 3}
+  <HardBreathingWithGasMaskAudio>k__BackingField: {fileID: 8300000, guid: 087074adfc3794949a26f2eba6731d04, type: 3}
+  <LackOfBreathingWithGasMaskAudio>k__BackingField: {fileID: 8300000, guid: 3a20ab2724831834ab0757d9fc8b9afc, type: 3}
+  <BreathingToxinsWithoutGasMask>k__BackingField: {fileID: 8300000, guid: 3a20ab2724831834ab0757d9fc8b9afc, type: 3}

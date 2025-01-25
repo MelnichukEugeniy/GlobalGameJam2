@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9dae8b3b04d4aaba6ebfd03552d117d, type: 3}
   m_Name: PlayerMovementInput
   m_EditorClassIdentifier: 
-  _proneKeyCode: 99
-  _crouchKeyCode: 306
-  _runningKeyCode: 304
-  _jumpKeyCode: 32
+  proneKeyCode: 122
+  crouchKeyCode: 99
+  runningKeyCode: 304
+  jumpKeyCode: 32

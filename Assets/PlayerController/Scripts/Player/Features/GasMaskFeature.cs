@@ -10,9 +10,10 @@ public class GasMaskFeature : BasePlayerFeature
     private PlayerInput playerInput;
 
     /// <summary>
-    /// Show state of gasmask. Equipped also mean it effect visible.
+    /// State of gasmask. Equipped also mean it effect visible.
     /// </summary>
     public bool Equipped { get; private set; }
+    public bool IsFilterWorking { get; private set; }
     
     public float FilterCapacitySecondsLeft { get; private set; }
 
@@ -23,10 +24,10 @@ public class GasMaskFeature : BasePlayerFeature
 
     public float FilterPercentage
     {
-        get => Mathf.InverseLerp(0, FilterCapacitySeconds, FilterCapacitySecondsLeft);
+        get => FilterCapacitySecondsLeft / FilterCapacitySeconds;
     }
 
-    private float _secondsTimer;
+    private float secondsTimer;
 
     public override void Update()
     {
@@ -34,29 +35,49 @@ public class GasMaskFeature : BasePlayerFeature
         {
             FlipFlopEquip();
         }
+
+        if (playerInput.EquipNewFilterDown())
+        {
+            AttachFilter();
+        }
         
         FilterTick();
     }
 
     private void FilterTick()
     {
-        _secondsTimer += Time.deltaTime;
+        if(IsFilterWorking == false)
+            return;
+        
+        secondsTimer += Time.deltaTime;
 
-        if (_secondsTimer > 1f)
-        {
-            FilterCapacitySecondsLeft -= _secondsTimer;
-        }
-
+        if (secondsTimer < .1f)
+            return;
+        
+        FilterCapacitySecondsLeft -= secondsTimer;
+        secondsTimer = 0;
+        
+        InvokeFilterCapacityLeftChanged();
+        
         if (FilterCapacitySecondsLeft <= 0)
         {
-            
+            IsFilterWorking = false;
         }
     }
 
     private void FlipFlopEquip()
     {
         Equipped = !Equipped;
-        EventBus<GasMaskEquipChanged>.Raise(new GasMaskEquipChanged(Equipped));
+        IsFilterWorking = Equipped;
+        
+        EventBus<GasMaskEquipChangedEvent>.Raise(new GasMaskEquipChangedEvent(Equipped));
+    }
+
+    private void AttachFilter()
+    {
+        FilterCapacitySecondsLeft = FilterCapacitySeconds;
+        
+        InvokeFilterCapacityLeftChanged();
     }
 
     private void InvokeFilterCapacityLeftChanged()
@@ -65,11 +86,11 @@ public class GasMaskFeature : BasePlayerFeature
     }
 }
 
-public struct GasMaskEquipChanged : IEvent
+public struct GasMaskEquipChangedEvent : IEvent
 {
     public bool Visibility;
 
-    public GasMaskEquipChanged(bool visibility)
+    public GasMaskEquipChangedEvent(bool visibility)
     {
         Visibility = visibility;
     }

@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: PlayerInput
   m_EditorClassIdentifier: 
   gasMaskKeyCode: 103
+  equipNewFilterKeyCode: 114

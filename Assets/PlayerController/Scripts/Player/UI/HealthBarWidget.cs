@@ -25,8 +25,7 @@ public class HealthBarWidget : MonoBehaviour
         float percentage = basePercentage;
         for (int i = 0; i < healthStages.Count; i++)
         {
-            Debug.Log($"Percentage: {percentage}");
-            if (@event.Feature.HealthPercentage + .01f <= percentage)
+            if (@event.Feature.HealthPercentage + .001f <= percentage)
             {
                 fillImage.fillAmount = healthStages[i]; 
                 return;
@@ -34,6 +33,8 @@ public class HealthBarWidget : MonoBehaviour
 
             percentage += basePercentage;
         }
+        
+        fillImage.fillAmount = 1; 
     }
 
     private void OnDestroy()
