@@ -26,51 +26,69 @@ namespace Player.Movement.States
 
         public virtual void Tick()
         {
-            // Плавне оновлення висоти та центру
-            Collider.center = Vector3.Lerp(Collider.center, SharedValues.TargetCenter, Time.deltaTime * Config.TransitionSpeed);
-            Collider.height = Mathf.Lerp(Collider.height, SharedValues.TargetHeight, Time.deltaTime * Config.TransitionSpeed);
+            UpdateCollider();
 
-            // Рух
-            float deltax = Input.GetHorizontal() * SharedValues.CurrentSpeed;
-            float deltaz = Input.GetVertical() * SharedValues.CurrentSpeed;
+            Move();
+        }
+
+        private float _percentage;
+        private float _timer;
+
+        private void UpdateCollider()
+        {
+            _timer += Time.deltaTime;
+            _percentage = Mathf.InverseLerp(0, config.TransitionSpeed, _timer);
+            controller.center = Vector3.Lerp(sharedValues.OriginalCenter, sharedValues.TargetCenter, _percentage);
+            controller.height = Mathf.Lerp(sharedValues.OriginalHeight, sharedValues.TargetHeight, _percentage);
+            
+            //controller.center = Vector3.Lerp(controller.center, sharedValues.TargetCenter, Time.deltaTime * config.TransitionSpeed);
+            //controller.height = Mathf.Lerp(controller.height, sharedValues.TargetHeight, Time.deltaTime * config.TransitionSpeed);
+            
+            //UpdateCameraPosition();
+        }
+
+        private void UpdateCameraPosition()
+        {
+            var headLocalPosition = sharedValues.HeadTransform.localPosition;
+            headLocalPosition.y = controller.height / 2f;
+            sharedValues.HeadTransform.localPosition = headLocalPosition + config.HeadOffset;
+        }
+        
+        private void Move()
+        {
+            float deltax = input.GetHorizontal() * currentSpeed;
+            float deltaz = input.GetVertical() * currentSpeed;
 
             Vector3 movement = new Vector3(deltax, 0, deltaz);
 
-            // Стрибок
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             if (Input.IsJumping() && Mathf.Abs(Collider.height - SharedValues.OriginalHeight) < 0.1f)
             {
-                if (IsGrounded())
+                sharedValues.VerticalVelocity = -1f;
+                sharedValues.PlayerAnimator.SetJump(false);
+                if (input.IsJumping() && Mathf.Abs(controller.height - sharedValues.OriginalHeight) < 0.1f)
                 {
-                    Debug.Log("Jump");
-                    // Стрибок можливий тільки у звичайному стані
-                    Rigidbody.AddForce(Vector3.up * Config.JumpForce, ForceMode.Impulse);
+                    sharedValues.PlayerAnimator.SetJump(true);
+                    sharedValues.VerticalVelocity = config.JumpForce;
                 }
             }
 
             movement = Vector3.ClampMagnitude(movement, SharedValues.CurrentSpeed);
 
             movement *= Time.deltaTime;
-            movement = SharedValues.Transform.TransformDirection(movement);
-            movement.y = Rigidbody.linearVelocity.y;
-            Rigidbody.linearVelocity = movement;
-        }
-
-        protected bool IsGrounded()
-        {
-            var ray = new Ray(SharedValues.Transform.position - SharedValues.OriginalCenter, -SharedValues.Transform.up);
-            bool result = Physics.Raycast(ray, out RaycastHit _, SharedValues.OriginalHeight / 1.9f, Config.GroundMask, QueryTriggerInteraction.Ignore);
+            movement = sharedValues.Transform.TransformDirection(movement);
             
-            return result;
+            controller.Move(movement);
         }
-
+        
         public virtual void OnEnter()
         {
-            
+            _timer = 0;
         }
 
         public virtual void OnExit()
         {
-            
+            _timer = 0;
         }
 
         public virtual Color GizmoColor()

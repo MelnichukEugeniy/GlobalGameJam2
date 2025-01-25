@@ -20,6 +20,10 @@ namespace Player.Movement.States
             SharedValues.CurrentSpeed = Input.IsRunning() ? Config.RunSpeed : Config.Speed;
 
             base.Tick();
+
+            var modificator = input.IsRunning() ? 1 : .5f;
+            sharedValues.PlayerAnimator.SetForwardVelocity(input.GetVertical() * modificator);
+            sharedValues.PlayerAnimator.SetRightVelocity(input.GetHorizontal() * modificator);
         }
     }
 }

@@ -25,7 +25,8 @@ namespace Player
         public PlayerMovementConfig Config;
         public PlayerMovementInput Input;
 
-        public CapsuleCollider Collider;
-        public Rigidbody Rigidbody;
+        public Transform HeadTransform;
+        public CharacterController CharacterController;
+        public PlayerAnimator PlayerAnimator;
     }
 }
