@@ -18,8 +18,8 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         sharedValues.Transform = transform;
-        sharedValues.OriginalHeight = sharedValues.CharacterController.height;
-        sharedValues.OriginalCenter = sharedValues.CharacterController.center;
+        sharedValues.OriginalHeight = sharedValues.Collider.height;
+        sharedValues.OriginalCenter = sharedValues.Collider.center;
         sharedValues.TargetHeight = sharedValues.OriginalHeight;
         sharedValues.TargetCenter = sharedValues.OriginalCenter;
         

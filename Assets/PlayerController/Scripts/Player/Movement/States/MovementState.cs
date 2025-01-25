@@ -6,21 +6,22 @@ namespace Player.Movement.States
 {
     public abstract class MovementState : IState
     {
-        protected float currentSpeed
+        protected float CurrentSpeed
         {
-            get => sharedValues.CurrentSpeed;
-            set => sharedValues.CurrentSpeed = value;
+            get => SharedValues.CurrentSpeed;
+            set => SharedValues.CurrentSpeed = value;
         }
 
-        protected PlayerMovementConfig config => sharedValues.Config;
-        protected PlayerMovementInput input => sharedValues.Input;
-        protected CharacterController controller => sharedValues.CharacterController;
+        protected PlayerMovementConfig Config => SharedValues.Config;
+        protected PlayerMovementInput Input => SharedValues.Input;
+        protected CapsuleCollider Collider => SharedValues.Collider;
+        protected Rigidbody Rigidbody => SharedValues.Rigidbody;
 
-        protected MovementSharedValues sharedValues;
+        protected MovementSharedValues SharedValues;
         
         public MovementState(MovementSharedValues sharedValues)
         {
-            this.sharedValues = sharedValues;
+            SharedValues = sharedValues;
         }
 
         public virtual void Tick()
@@ -60,7 +61,8 @@ namespace Player.Movement.States
 
             Vector3 movement = new Vector3(deltax, 0, deltaz);
 
-            if (controller.isGrounded)
+            // �������
+            if (Input.IsJumping() && Mathf.Abs(Collider.height - SharedValues.OriginalHeight) < 0.1f)
             {
                 sharedValues.VerticalVelocity = -1f;
                 sharedValues.PlayerAnimator.SetJump(false);
@@ -70,12 +72,8 @@ namespace Player.Movement.States
                     sharedValues.VerticalVelocity = config.JumpForce;
                 }
             }
-            else
-            {
-                sharedValues.VerticalVelocity += config.Gravity * Time.deltaTime;
-            }
-            
-            movement.y = sharedValues.VerticalVelocity;
+
+            movement = Vector3.ClampMagnitude(movement, SharedValues.CurrentSpeed);
 
             movement *= Time.deltaTime;
             movement = sharedValues.Transform.TransformDirection(movement);

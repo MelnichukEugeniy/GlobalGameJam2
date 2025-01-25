@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Player.Movement.States
 {
     public class ProneState : MovementState
