@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ public class InfectionFeature : BasePlayerFeature
     private EventBinding<PlayerEnterInfectionZoneEvent> playerEnterInfectionZoneEventBinding;
     private EventBinding<PlayerExitInfectionZoneEvent> playerExitInfectionZoneEventBinding;
     private EventBinding<GasMaskEquipChangedEvent> gasMaskEquipChangedEventBinding;
+    private EventBinding<FilterCapacityLeftChangedEvent> filterCapacityLeftChangedEventBinding;
 
     public bool InInfectionZone { get; private set; }
 
@@ -28,10 +30,12 @@ public class InfectionFeature : BasePlayerFeature
         playerEnterInfectionZoneEventBinding = new EventBinding<PlayerEnterInfectionZoneEvent>(OnPlayerEnterInfectionZone);
         playerExitInfectionZoneEventBinding = new EventBinding<PlayerExitInfectionZoneEvent>(OnPlayerExitInfectionZone);
         gasMaskEquipChangedEventBinding = new EventBinding<GasMaskEquipChangedEvent>(OnGasMaskEquipChanged);
+        filterCapacityLeftChangedEventBinding = new EventBinding<FilterCapacityLeftChangedEvent>(OnFilterCapacityLeftChanged);
         
         EventBus<PlayerEnterInfectionZoneEvent>.Register(playerEnterInfectionZoneEventBinding);
         EventBus<PlayerExitInfectionZoneEvent>.Register(playerExitInfectionZoneEventBinding);
         EventBus<GasMaskEquipChangedEvent>.Register(gasMaskEquipChangedEventBinding);
+        EventBus<FilterCapacityLeftChangedEvent>.Register(filterCapacityLeftChangedEventBinding);
     }
 
     private void OnPlayerEnterInfectionZone(PlayerEnterInfectionZoneEvent @event)
@@ -71,6 +75,14 @@ public class InfectionFeature : BasePlayerFeature
         }
     }
 
+    private void OnFilterCapacityLeftChanged(FilterCapacityLeftChangedEvent @event)
+    {
+        if (@event.Feature.IsFilterWorking == false)
+        {
+            StartInfectionTick();
+        }
+    }
+
     private void StartInfectionTick()
     {
         _infectionCoroutine = playerController.StartCoroutine(InfectionTickRoutine());
@@ -98,5 +110,6 @@ public class InfectionFeature : BasePlayerFeature
         EventBus<PlayerEnterInfectionZoneEvent>.Deregister(playerEnterInfectionZoneEventBinding);
         EventBus<PlayerExitInfectionZoneEvent>.Deregister(playerExitInfectionZoneEventBinding);
         EventBus<GasMaskEquipChangedEvent>.Deregister(gasMaskEquipChangedEventBinding);
+        EventBus<FilterCapacityLeftChangedEvent>.Deregister(filterCapacityLeftChangedEventBinding);
     }
 }

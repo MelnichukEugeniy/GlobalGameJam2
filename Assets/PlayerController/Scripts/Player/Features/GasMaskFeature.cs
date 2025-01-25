@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(GasMaskFeature), menuName = "Player/Features/GasMask")]
@@ -28,6 +29,13 @@ public class GasMaskFeature : BasePlayerFeature
     }
 
     private float secondsTimer;
+
+    public override void InitializeWithPlayer(PlayerController player)
+    {
+        base.InitializeWithPlayer(player);
+        
+        InvokeFilterCapacityLeftChanged();
+    }
 
     public override void Update()
     {
@@ -83,6 +91,22 @@ public class GasMaskFeature : BasePlayerFeature
     private void InvokeFilterCapacityLeftChanged()
     {
         EventBus<FilterCapacityLeftChangedEvent>.Raise(new FilterCapacityLeftChangedEvent(FilterCapacitySecondsLeft, this, playerController));
+    }
+
+    private void Reset()
+    {
+        Equipped = false;
+        IsFilterWorking = false;
+    }
+
+    private void OnEnable()
+    {
+        Reset();
+    }
+
+    private void OnDisable()
+    {
+        Reset();
     }
 }
 

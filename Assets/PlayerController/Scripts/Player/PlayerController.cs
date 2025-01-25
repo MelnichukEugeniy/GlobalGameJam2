@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -63,5 +62,10 @@ public class PlayerController : MonoBehaviour
         }
         
         throw new Exception($"{typeof(TFeature).FullName} feature is not present in player features list");
+    }
+
+    private void OnDestroy()
+    {
+        playerFeatures.ForEach(x => x.Dispose());
     }
 }

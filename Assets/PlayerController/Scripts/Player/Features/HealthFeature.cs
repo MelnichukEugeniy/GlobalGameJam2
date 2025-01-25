@@ -19,6 +19,7 @@ public class HealthFeature : BasePlayerFeature
 
         IsDead = false;
         Health = config.BaseHealth;
+        
         InvokePlayerHealthChanged();
     }
 
@@ -81,4 +82,10 @@ public class HealthFeature : BasePlayerFeature
         }
     }
 #endif
+
+    private void Reset()
+    {
+        IsDead = false;
+        Health = config.BaseHealth;
+    }
 }

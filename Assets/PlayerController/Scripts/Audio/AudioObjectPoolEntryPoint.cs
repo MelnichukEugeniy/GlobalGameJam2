@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -12,7 +13,7 @@ public class AudioObjectPoolEntryPoint : MonoBehaviour
     private Transform audiosParent;
     private ObjectPoolManager poolManager;
     private IObjectPool<AudioPlayer> audioSourcesPool;
-    
+
     public void InitializePoolWithParent(Transform parent)
     {
         audiosParent = parent;
@@ -30,6 +31,11 @@ public class AudioObjectPoolEntryPoint : MonoBehaviour
     public AudioPlayer GetAudioPlayer()
     {
         return audioSourcesPool.Get();
+    }
+
+    public void ReleasePlayer(AudioPlayer audioPlayer)
+    {
+        audioSourcesPool.Release(audioPlayer);
     }
 
     private AudioPlayer AudioSourceFactory()

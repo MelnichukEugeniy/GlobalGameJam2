@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class AudioPlayer : MonoBehaviour, IPoolable
@@ -8,9 +7,15 @@ public class AudioPlayer : MonoBehaviour, IPoolable
 
     public GameObject ObjectInstance { get; }
 
-    public void SetClipAndPlay(AudioClip clip)
+    public void Play(AudioClip clip)
     {
-        
+        audioSource.clip = clip;
+        audioSource.Play();
+    }
+
+    public void Stop()
+    {
+        audioSource.Stop();
     }
     
     public void OnSpawn()
@@ -23,5 +28,10 @@ public class AudioPlayer : MonoBehaviour, IPoolable
     {
         gameObject.SetActive(false);
         audioSource.Stop();
+    }
+
+    public void SetLoop(bool loop)
+    {
+        audioSource.loop = loop;
     }
 }
