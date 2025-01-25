@@ -12,16 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 418fabff915d4f559b718f8e43e635b7, type: 3}
   m_Name: PlayerMovementConfig
   m_EditorClassIdentifier: 
-  Speed: 1500
-  RunSpeed: 2500
-  JumpForce: 5
-  CrouchSpeed: 350
-  ProneSpeed: 200
-  TransitionSpeed: 3
+  Speed: 5
+  RunSpeed: 10
+  JumpForce: 7
+  CrouchSpeed: 2
+  ProneSpeed: 1
+  TransitionSpeed: 1
+  Gravity: -30
   CrouchHeight: 1.2
   ProneHeight: 0.8
-  CrouchCenter: {x: 0, y: 0.1, z: 0}
-  ProneCenter: {x: 0, y: 0.7, z: 0}
-  GroundMask:
-    serializedVersion: 2
-    m_Bits: 55
+  CrouchCenter: {x: 0, y: -0.42, z: 0}
+  ProneCenter: {x: 0, y: -0.48, z: 0}

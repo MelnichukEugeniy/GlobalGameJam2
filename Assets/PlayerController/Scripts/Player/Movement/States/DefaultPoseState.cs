@@ -11,13 +11,13 @@ namespace Player.Movement.States
         {
             base.OnEnter();
             
-            SharedValues.TargetHeight = SharedValues.OriginalHeight;
-            SharedValues.TargetCenter = SharedValues.OriginalCenter;
+            sharedValues.TargetHeight = sharedValues.OriginalHeight;
+            sharedValues.TargetCenter = sharedValues.OriginalCenter;
         }
 
         public override void Tick()
         {
-            SharedValues.CurrentSpeed = Input.IsRunning() ? Config.RunSpeed : Config.Speed;
+            sharedValues.CurrentSpeed = input.IsRunning() ? config.RunSpeed : config.Speed;
 
             base.Tick();
 
