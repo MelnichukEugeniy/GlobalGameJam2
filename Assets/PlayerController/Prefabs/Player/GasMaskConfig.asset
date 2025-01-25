@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be67c5b9d7d14bebae3ed730825ad435, type: 3}
+  m_Name: GasMaskConfig
+  m_EditorClassIdentifier: 
+  <FilterCapacitySeconds>k__BackingField: 30
+  <FilterBarelyEndPercentage>k__BackingField: 0.2
+  <BreathInSeconds>k__BackingField: 1
+  <NormalBreathingWithGasMaskAudio>k__BackingField: {fileID: 8300000, guid: 0e799e6951ff5524fa269b5094f1edb6, type: 3}
+  <HardBreathingWithGasMaskAudio>k__BackingField: {fileID: 8300000, guid: 087074adfc3794949a26f2eba6731d04, type: 3}
+  <LackOfBreathingWithGasMaskAudio>k__BackingField: {fileID: 8300000, guid: 3a20ab2724831834ab0757d9fc8b9afc, type: 3}
+  <BreathingToxinsWithoutGasMask>k__BackingField: {fileID: 8300000, guid: 3a20ab2724831834ab0757d9fc8b9afc, type: 3}
