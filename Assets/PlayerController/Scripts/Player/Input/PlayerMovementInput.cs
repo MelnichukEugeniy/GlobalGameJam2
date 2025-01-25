@@ -5,29 +5,33 @@ namespace Player.Input
     [CreateAssetMenu(fileName = nameof(PlayerMovementInput), menuName = "Player/MovementInput")]
     public class PlayerMovementInput : ScriptableObject
     {
-        [SerializeField] private KeyCode _proneKeyCode;
-        [SerializeField] private KeyCode _crouchKeyCode;
-        [SerializeField] private KeyCode _runningKeyCode;
-        [SerializeField] private KeyCode _jumpKeyCode;
+        [SerializeField] 
+        private KeyCode proneKeyCode;
+        [SerializeField] 
+        private KeyCode crouchKeyCode;
+        [SerializeField] 
+        private KeyCode runningKeyCode;
+        [SerializeField] 
+        private KeyCode jumpKeyCode;
 
         public bool IsCrouch()
         {
-            return UnityEngine.Input.GetKey(_crouchKeyCode);
+            return UnityEngine.Input.GetKey(crouchKeyCode);
         }
 
         public bool IsProne()
         {
-            return UnityEngine.Input.GetKey(_proneKeyCode);
+            return UnityEngine.Input.GetKey(proneKeyCode);
         }
 
         public bool IsRunning()
         {
-            return UnityEngine.Input.GetKey(_runningKeyCode);
+            return UnityEngine.Input.GetKey(runningKeyCode);
         }
 
         public bool IsJumping()
         {
-            return UnityEngine.Input.GetKeyDown(_jumpKeyCode);
+            return UnityEngine.Input.GetKeyDown(jumpKeyCode);
         }
         
         public bool AskToChangePose()
