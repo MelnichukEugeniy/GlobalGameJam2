@@ -199,7 +199,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1301493582938604198}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
@@ -1677,6 +1677,7 @@ GameObject:
   - component: {fileID: 8135488337754884973}
   - component: {fileID: 6574776820567562794}
   - component: {fileID: 5455300144120633707}
+  - component: {fileID: 7888908622177992718}
   m_Layer: 0
   m_Name: InteractionRange
   m_TagString: Untagged
@@ -1738,6 +1739,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aaedf1dd3510f34428204d6ae4f5ef7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionMessage: {fileID: 7689365116553902456}
+--- !u!114 &7888908622177992718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6653502501139072462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dc30b270fa11a340bb02a0ab964dab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   interactionMessage: {fileID: 7689365116553902456}
