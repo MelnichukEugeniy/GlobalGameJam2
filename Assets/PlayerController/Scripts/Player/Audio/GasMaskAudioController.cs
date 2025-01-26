@@ -107,7 +107,7 @@ public class GasMaskAudioController : MonoBehaviour
 
     private void StopAudio()
     {
-        gasMaskAudioPlayer.Stop();
+        gasMaskAudioPlayer?.Stop();
         currentClip = null;
     }
 }
