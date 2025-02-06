@@ -8,6 +8,8 @@ public class Timer : IDisposable
     {
         #region STATIC
 
+        public static Timer SecondsTimer { get; private set; }
+        
         private static HashSet<Timer> timers = new();
         private static TimerCoroutineObject coroutineObject;
 
@@ -34,11 +36,19 @@ public class Timer : IDisposable
             }
         }
         
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
         private static void InstantiateTimerCoroutineObject()
         {
             coroutineObject = new GameObject(nameof(TimerCoroutineObject)).AddComponent<TimerCoroutineObject>();
             coroutineObject.StartCoroutine(TimersTick());
             Object.DontDestroyOnLoad(coroutineObject.gameObject);
+            
+            CreateDefaultTimers();
+        }
+
+        private static void CreateDefaultTimers()
+        {
+            SecondsTimer = CreateTimer(1, 1, true);
         }
         
         #endregion

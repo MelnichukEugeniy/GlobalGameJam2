@@ -93,7 +93,7 @@ namespace Systems.Persistence {
         public void NewGame() {
             gameData = new GameData {
                 Name = "Game",
-                CurrentLevelName = "Demo"
+                CurrentLevelName = "SampleScene"
             };
             SceneManager.LoadScene(gameData.CurrentLevelName);
         }
@@ -104,7 +104,7 @@ namespace Systems.Persistence {
             gameData = dataService.Load(gameName);
 
             if (String.IsNullOrWhiteSpace(gameData.CurrentLevelName)) {
-                gameData.CurrentLevelName = "Demo";
+                gameData.CurrentLevelName = "SampleScene";
             }
 
             SceneManager.LoadScene(gameData.CurrentLevelName);

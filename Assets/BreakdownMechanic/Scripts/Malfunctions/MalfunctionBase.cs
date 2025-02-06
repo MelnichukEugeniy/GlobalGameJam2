@@ -7,5 +7,7 @@ public abstract class MalfunctionBase : ScriptableObject, IDisposable
     
     public abstract void Update();
 
+    public abstract bool IsMalfunctionDetected();
     public abstract void Dispose();
+    
 }
