@@ -2,17 +2,18 @@ using System;
 using Systems.Persistence;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = nameof(FilterCloggingMalfunction), menuName = "Malfunction/Vents/Filter/Clogging")]
+[CreateAssetMenu(fileName = nameof(FilterCloggingMalfunction), menuName = "Malfunction/Vents/Fan/FanOverpowered")]
 public class FanOverpoweredMalfunction : VentMalfunction, IBind<FanOverpoweredMalfunction.FanData>
 {
     public SerializableGuid Id { get; set; } = SerializableGuid.NewGuid();
     
-    private float workingTimeSeconds
+    private float WorkingTimeSeconds
     {
         get => data.workingTimeSeconds;
         set
         {
             data.workingTimeSeconds = value;
+            UpdateTemperature();
             data.InvokeOnChange();
         }
     }
@@ -34,12 +35,17 @@ public class FanOverpoweredMalfunction : VentMalfunction, IBind<FanOverpoweredMa
 
     public override bool IsMalfunctionDetected()
     {
-        return false;
+        return data.temperature >= config.CriticalTemperatureCelsius;
     }
 
-    private void OnSecondsTimerTimeout(Timer timer)
+    private void UpdateTemperature()
     {
-        workingTimeSeconds += 1;
+        data.temperature = data.workingTimeSeconds.Map(0, config.CriticalWorkTimeSecond, config.MinTemperatureCelsius, config.MaxTemperatureCelsius);
+    }
+    
+    private void OnSecondsTimerTimeout(Timer _)
+    {
+        WorkingTimeSeconds += 1;
     }
     
     public override void Dispose()
@@ -47,6 +53,7 @@ public class FanOverpoweredMalfunction : VentMalfunction, IBind<FanOverpoweredMa
         timer.OnTimeout -= OnSecondsTimerTimeout;
     }
     
+    [Serializable]
     public class FanData : ISaveable
     {
         public event Action OnChange; 
@@ -54,13 +61,14 @@ public class FanOverpoweredMalfunction : VentMalfunction, IBind<FanOverpoweredMa
         public SerializableGuid Id { get; set; }
 
         public float workingTimeSeconds;
+        public float temperature;
 
         public void InvokeOnChange()
         {
             OnChange?.Invoke();
         }
     }
-    
+
     public void Bind(FanData data)
     {
         this.data = data;
