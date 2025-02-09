@@ -16,3 +16,4 @@ MonoBehaviour:
   crouchKeyCode: 99
   runningKeyCode: 304
   jumpKeyCode: 32
+  smoothSpeed: 2
