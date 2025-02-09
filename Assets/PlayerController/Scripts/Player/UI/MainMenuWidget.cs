@@ -24,14 +24,14 @@ public class MainMenuWidget : MonoBehaviour
     
     private void Awake()
     {
-        Debug.Log(videoPlayer.audioTrackCount);
-        Debug.Log(videoPlayer.controlledAudioTrackCount);
-        
         playButton.onClick.AddListener(OnPlayPressed);
         exitButton.onClick.AddListener(OnExitPressed);
-        
-        if(SceneManager.GetActiveScene().name != "SampleScene")
+
+        if (SceneManager.GetActiveScene().name != "SampleScene")
+        {
+            Hide();
             return;
+        }
         
         Show();
     }
