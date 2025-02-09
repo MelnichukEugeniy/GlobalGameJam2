@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = nameof(FilterMalfunctionConfig), menuName = "Malfunction/Vents/Fan/OverpoweredConfig")]
+[CreateAssetMenu(fileName = nameof(FilterCloggingMalfunctionConfig), menuName = "Malfunction/Vents/Fan/OverpoweredConfig")]
 public class FanOverpoweredMalfunctionConfig : ScriptableObject
 {
     [field: SerializeField]

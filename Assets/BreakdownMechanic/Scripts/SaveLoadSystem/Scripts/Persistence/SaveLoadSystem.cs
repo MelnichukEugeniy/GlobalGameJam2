@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using BreakdownMechanic.Scripts.Malfunctions.Vents.Fan;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +9,9 @@ namespace Systems.Persistence {
     [Serializable] public class GameData { 
         public string Name;
         public string CurrentLevelName;
+
+        public FanOverpoweredMalfunction.FanData FanData;
+        public FilterCloggingMalfunction.FilterData FilterData;
     }
         
     public interface ISaveable  {
@@ -21,7 +25,7 @@ namespace Systems.Persistence {
     
     public class SaveLoadSystem : PersistentSingleton<SaveLoadSystem> {
         [SerializeField] public GameData gameData;
-
+        
         IDataService dataService;
 
         protected override void Awake() {
@@ -35,13 +39,20 @@ namespace Systems.Persistence {
         void OnDisable() => SceneManager.sceneLoaded -= OnSceneLoaded;
         
         void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-            //if (scene.name == "Menu") return; // guard for scenes with no bindings
+            BindScriptableObject<FilterCloggingMalfunction, FilterCloggingMalfunction.FilterData>(gameData.FilterData);
+            BindScriptableObject<FanOverpoweredMalfunction, FanOverpoweredMalfunction.FanData>(gameData.FanData);
             
-            //Bind<Inventory.Inventory, InventoryData>(gameData.inventoryData);
+            
+            Bind<DiagnosticTempWidget, FilterCloggingMalfunction.FilterData>(gameData.FilterData);
+            Bind<DiagnosticTempWidget, FanOverpoweredMalfunction.FanData>(gameData.FanData);
+            Bind<VentsMalfunctionController, FanOverpoweredMalfunction.FanData>(gameData.FanData);
+            Bind<VentsMalfunctionController, FilterCloggingMalfunction.FilterData>(gameData.FilterData);
+            Bind<FanController, FanOverpoweredMalfunction.FanData>(gameData.FanData);
+            Bind<FilterController, FilterCloggingMalfunction.FilterData>(gameData.FilterData);
         }
         
         void Bind<T, TData>(TData data) where T : MonoBehaviour, IBind<TData> where TData : ISaveable, new() {
-            var entity = FindObjectsByType<T>(FindObjectsSortMode.None).FirstOrDefault();
+            var entity = FindObjectsByType<T>(FindObjectsInactive.Include, FindObjectsSortMode.None).FirstOrDefault();
             if (entity != null) {
                 if (data == null) {
                     data = new TData { Id = entity.Id };
@@ -50,8 +61,9 @@ namespace Systems.Persistence {
             }
         }
 
-        void Bind<T, TData>(List<TData> datas) where T: MonoBehaviour, IBind<TData> where TData : ISaveable, new() {
-            var entities = FindObjectsByType<T>(FindObjectsSortMode.None);
+        void Bind<T, TData>(List<TData> datas) where T: MonoBehaviour, IBind<TData> where TData : ISaveable, new()
+        {
+            var entities = FindObjectsByType<T>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 
             foreach(var entity in entities) {
                 var data = datas.FirstOrDefault(d=> d.Id == entity.Id);
@@ -93,7 +105,7 @@ namespace Systems.Persistence {
         public void NewGame() {
             gameData = new GameData {
                 Name = "Game",
-                CurrentLevelName = "SampleScene"
+                CurrentLevelName = "SampleScene 1"
             };
             SceneManager.LoadScene(gameData.CurrentLevelName);
         }
@@ -104,7 +116,7 @@ namespace Systems.Persistence {
             gameData = dataService.Load(gameName);
 
             if (String.IsNullOrWhiteSpace(gameData.CurrentLevelName)) {
-                gameData.CurrentLevelName = "SampleScene";
+                gameData.CurrentLevelName = "SampleScene 1";
             }
 
             SceneManager.LoadScene(gameData.CurrentLevelName);

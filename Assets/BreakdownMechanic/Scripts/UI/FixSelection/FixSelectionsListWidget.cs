@@ -91,11 +91,12 @@ public class FixSelectionsListWidget : Widget
         SetActiveCurrentSelection();
     }
 
-    public void PerformSelectedAction()
+    public FixAction PerformSelectedAction()
     {
         if(!content.gameObject.activeSelf)
-            return;
+            return null;
         
         selectionActions[currentSelectionIndex].PerformAction();
+        return selectionActions[currentSelectionIndex];
     }
 }

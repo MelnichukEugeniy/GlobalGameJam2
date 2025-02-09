@@ -14,7 +14,6 @@ public class SelectionWidget : Widget
     [SerializeField]
     private TMP_Text textField;
 
-
     public void Activate()
     {
         backgroundImage.color = activeColor;

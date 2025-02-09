@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = nameof(FilterMalfunctionConfig), menuName = "Malfunction/Vents/Filter/Config")]
-public class FilterMalfunctionConfig : ScriptableObject
+[CreateAssetMenu(fileName = nameof(FilterCloggingMalfunctionConfig), menuName = "Malfunction/Vents/Filter/Config")]
+public class FilterCloggingMalfunctionConfig : ScriptableObject
 {
     [field: SerializeField]
     public float CloggingCriticalValue { get; private set; }

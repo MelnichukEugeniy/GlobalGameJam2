@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -11,6 +12,8 @@ public class Timer : IDisposable
         public static Timer SecondsTimer { get; private set; }
         
         private static HashSet<Timer> timers = new();
+        private static HashSet<Timer> removeTimers = new();
+        private static HashSet<Timer> addTimers = new();
         private static TimerCoroutineObject coroutineObject;
 
         public static Timer CreateTimer(float delay, float rate, bool loop)
@@ -19,7 +22,7 @@ public class Timer : IDisposable
                 InstantiateTimerCoroutineObject();
 
             var timer = new Timer(delay, rate, loop);
-            timers.Add(timer);
+            addTimers.Add(timer);
             
             return timer;
         }
@@ -32,6 +35,15 @@ public class Timer : IDisposable
                 {
                     timer.Tick(Time.deltaTime);
                 }
+
+                foreach (var timer in removeTimers)
+                {
+                    timers.Remove(timer);
+                }
+                removeTimers.Clear();
+                
+                timers.AddRange(addTimers);
+                addTimers.Clear();
                 yield return null;
             }
         }
@@ -95,7 +107,7 @@ public class Timer : IDisposable
 
         public void Dispose()
         {
-            timers.Remove(this);
+            removeTimers.Add(this);
             OnTimeout = null;
         }
     }

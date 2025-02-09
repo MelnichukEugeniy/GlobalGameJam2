@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f63461158579464ab2eb11e8432036d9, type: 3}
   m_Name: FilterCloggingMalfunction
   m_EditorClassIdentifier: 
-  config: {fileID: 11400000, guid: 9d04ea99b2a399c41afd5c62f788f62f, type: 2}
+  <Config>k__BackingField: {fileID: 11400000, guid: 9d04ea99b2a399c41afd5c62f788f62f, type: 2}
+  undergroundLocalVolume: {fileID: 11400000, guid: bfee8ffbb5b0de345880a191564ee71e, type: 2}

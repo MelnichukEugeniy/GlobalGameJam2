@@ -5,6 +5,6 @@ public class EnableEngineCoolingAction : FixAction
 {
     public override void PerformAction()
     {
-        Debug.Log("Enabled engine cooling.");      
+        Debug.Log("Enabled engine cooling.");
     }
 }

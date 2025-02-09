@@ -16,15 +16,22 @@ public class UndergroundLocalVolume : ScriptableObject
     public void SetFog()
     {
         Profile.Value = fogProfile;
+        Debug.Log("FOG VOLUME");
     }
 
     public void SetHotTemperature()
     {
         Profile.Value = hotTemperatureProfile;
+        Debug.Log("HOT VOLUME");
     }
 
     public void ClearEffects()
     {
         Profile.Value = null;
+    }
+
+    private void OnEnable()
+    {
+        ClearEffects();
     }
 }
