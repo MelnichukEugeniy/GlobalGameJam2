@@ -17,7 +17,10 @@ public class AudioManager : MonoBehaviour
             if (_instance == null)
                 _instance = value;
             else
+            {
+                Destroy(value.gameObject);
                 throw new Exception("Audio Manager already exist.");
+            }
         }
     }
     private static AudioManager _instance;

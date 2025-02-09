@@ -14,6 +14,10 @@ namespace Player.Input
         [SerializeField] 
         private KeyCode jumpKeyCode;
 
+        private float smoothHorizontal;
+        private float smoothVertical;
+        [SerializeField] private float smoothSpeed = 10f;
+
         public bool IsCrouch()
         {
             return UnityEngine.Input.GetKey(crouchKeyCode);
@@ -41,12 +45,16 @@ namespace Player.Input
 
         public float GetHorizontal()
         {
-            return UnityEngine.Input.GetAxisRaw("Horizontal");
+            float target = UnityEngine.Input.GetAxisRaw("Horizontal");
+            smoothHorizontal = Mathf.Lerp(smoothHorizontal, target, Time.deltaTime * smoothSpeed);
+            return smoothHorizontal;
         }
 
         public float GetVertical()
         {
-            return UnityEngine.Input.GetAxisRaw("Vertical");
+            float target = UnityEngine.Input.GetAxisRaw("Vertical");
+            smoothVertical = Mathf.Lerp(smoothVertical, target, Time.deltaTime * smoothSpeed);
+            return smoothVertical;
         }
     }
 }
