@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 847e36a99b1c4e80af262d559f081668, type: 3}
   m_Name: FilterMalfunctionConfig
   m_EditorClassIdentifier: 
-  <CloggingCriticalValue>k__BackingField: 40
+  <CloggingCriticalValue>k__BackingField: 600
   <CloggingRate>k__BackingField: 1
   <CloggingTickSeconds>k__BackingField: 1
   <CloggingPerTick>k__BackingField: 1
