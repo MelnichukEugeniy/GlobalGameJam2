@@ -5,29 +5,37 @@ namespace Player.Input
     [CreateAssetMenu(fileName = nameof(PlayerMovementInput), menuName = "Player/MovementInput")]
     public class PlayerMovementInput : ScriptableObject
     {
-        [SerializeField] private KeyCode _proneKeyCode;
-        [SerializeField] private KeyCode _crouchKeyCode;
-        [SerializeField] private KeyCode _runningKeyCode;
-        [SerializeField] private KeyCode _jumpKeyCode;
+        [SerializeField] 
+        private KeyCode proneKeyCode;
+        [SerializeField] 
+        private KeyCode crouchKeyCode;
+        [SerializeField] 
+        private KeyCode runningKeyCode;
+        [SerializeField] 
+        private KeyCode jumpKeyCode;
+
+        private float smoothHorizontal;
+        private float smoothVertical;
+        [SerializeField] private float smoothSpeed = 10f;
 
         public bool IsCrouch()
         {
-            return UnityEngine.Input.GetKey(_crouchKeyCode);
+            return UnityEngine.Input.GetKey(crouchKeyCode);
         }
 
         public bool IsProne()
         {
-            return UnityEngine.Input.GetKey(_proneKeyCode);
+            return UnityEngine.Input.GetKey(proneKeyCode);
         }
 
         public bool IsRunning()
         {
-            return UnityEngine.Input.GetKey(_runningKeyCode);
+            return UnityEngine.Input.GetKey(runningKeyCode);
         }
 
         public bool IsJumping()
         {
-            return UnityEngine.Input.GetKeyDown(_jumpKeyCode);
+            return UnityEngine.Input.GetKeyDown(jumpKeyCode);
         }
         
         public bool AskToChangePose()
@@ -37,12 +45,16 @@ namespace Player.Input
 
         public float GetHorizontal()
         {
-            return UnityEngine.Input.GetAxisRaw("Horizontal");
+            float target = UnityEngine.Input.GetAxisRaw("Horizontal");
+            smoothHorizontal = Mathf.Lerp(smoothHorizontal, target, Time.deltaTime * smoothSpeed);
+            return smoothHorizontal;
         }
 
         public float GetVertical()
         {
-            return UnityEngine.Input.GetAxisRaw("Vertical");
+            float target = UnityEngine.Input.GetAxisRaw("Vertical");
+            smoothVertical = Mathf.Lerp(smoothVertical, target, Time.deltaTime * smoothSpeed);
+            return smoothVertical;
         }
     }
 }
