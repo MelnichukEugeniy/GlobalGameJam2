@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea5acfe09aa44cae96bd7baaeae5ee74, type: 3}
   m_Name: FanOverpoweredConfig
   m_EditorClassIdentifier: 
-  <CriticalWorkTimeSecond>k__BackingField: 120
+  <CriticalWorkTimeSecond>k__BackingField: 20
   <CriticalTemperatureCelsius>k__BackingField: 90
   <MinTemperatureCelsius>k__BackingField: 20
   <MaxTemperatureCelsius>k__BackingField: 100

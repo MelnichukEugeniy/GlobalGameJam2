@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
+[DefaultExecutionOrder(100)]
 public class MainMenuWidget : MonoBehaviour
 {
     [SerializeField]

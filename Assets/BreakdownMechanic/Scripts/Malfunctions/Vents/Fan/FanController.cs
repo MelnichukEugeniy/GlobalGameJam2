@@ -53,6 +53,11 @@ namespace BreakdownMechanic.Scripts.Malfunctions.Vents.Fan
 
         public void OnLookEnter()
         {
+            if (data == null)
+            {
+                Debug.Log("Data null");
+            }
+            
             if(data.state.Value is EMalfunctionState.CanBeFixed)
                 FixSelectionsListWidget.Instance.ShowSelectionsList(runtimeFixActions);
         }
@@ -70,11 +75,13 @@ namespace BreakdownMechanic.Scripts.Malfunctions.Vents.Fan
             Id = data.Id;
         
             data.state.OnChanged += OnMalfunctionStateChanged;
+            OnMalfunctionStateChanged(data.state.Value);
+            Debug.Log($"Bind fan data for {gameObject.name}");
         }
 
         private void OnMalfunctionStateChanged(EMalfunctionState state)
         {
-            animator.SetBool(workingKey, state is not EMalfunctionState.Undetected);
+            animator.SetBool(workingKey, state is EMalfunctionState.Undetected);
             if(state is not EMalfunctionState.Undetected)
                 undergroundLocalVolume.SetHotTemperature();
         }

@@ -23,3 +23,4 @@ MonoBehaviour:
   ProneHeight: 0.8
   CrouchCenter: {x: 0, y: -0.42, z: 0}
   ProneCenter: {x: 0, y: -0.48, z: 0}
+  HeadOffset: {x: 0, y: 0, z: 0}

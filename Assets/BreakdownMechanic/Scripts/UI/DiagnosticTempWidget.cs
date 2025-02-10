@@ -118,6 +118,8 @@ public class DiagnosticTempWidget : Widget, IBind<FanOverpoweredMalfunction.FanD
 
     private void OnFanStateChange(EMalfunctionState eMalfunctionState)
     {
+        if(FanStateImage == null)
+            return;
         FanStateImage.sprite = eMalfunctionState is not EMalfunctionState.Undetected ? redCross : greenMark;
     }
 
@@ -129,7 +131,7 @@ public class DiagnosticTempWidget : Widget, IBind<FanOverpoweredMalfunction.FanD
     private void OnDestroy()
     {
         if(fanData != null)
-            filterData.cloggingValue.OnChanged += OnFilterChange;
+            filterData.cloggingValue.OnChanged -= OnFilterChange;
 
         if (filterData != null)
             filterData.state.OnChanged -= OnFanStateChange;

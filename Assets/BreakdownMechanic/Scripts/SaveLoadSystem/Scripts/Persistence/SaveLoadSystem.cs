@@ -39,18 +39,25 @@ namespace Systems.Persistence {
         void OnDisable() => SceneManager.sceneLoaded -= OnSceneLoaded;
         
         void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-            BindScriptableObject<FilterCloggingMalfunction, FilterCloggingMalfunction.FilterData>(gameData.FilterData);
-            BindScriptableObject<FanOverpoweredMalfunction, FanOverpoweredMalfunction.FanData>(gameData.FanData);
-            
-            
-            Bind<DiagnosticTempWidget, FilterCloggingMalfunction.FilterData>(gameData.FilterData);
-            Bind<DiagnosticTempWidget, FanOverpoweredMalfunction.FanData>(gameData.FanData);
-            Bind<VentsMalfunctionController, FanOverpoweredMalfunction.FanData>(gameData.FanData);
-            Bind<VentsMalfunctionController, FilterCloggingMalfunction.FilterData>(gameData.FilterData);
-            Bind<FanController, FanOverpoweredMalfunction.FanData>(gameData.FanData);
-            Bind<FilterController, FilterCloggingMalfunction.FilterData>(gameData.FilterData);
+            if (scene.name == "SampleScene")
+            {
+                BindScriptableObject<FilterCloggingMalfunction, FilterCloggingMalfunction.FilterData>(gameData.FilterData);
+                BindScriptableObject<FanOverpoweredMalfunction, FanOverpoweredMalfunction.FanData>(gameData.FanData);
+                
+                Bind<VentsMalfunctionController, FanOverpoweredMalfunction.FanData>(gameData.FanData);
+                Bind<VentsMalfunctionController, FilterCloggingMalfunction.FilterData>(gameData.FilterData);
+                
+                Bind<DiagnosticTempWidget, FilterCloggingMalfunction.FilterData>(gameData.FilterData);
+                Bind<DiagnosticTempWidget, FanOverpoweredMalfunction.FanData>(gameData.FanData);
+            }
+
+            if (scene.name == "UndergroundFloor")
+            {
+                BindSameForAll<FilterController, FilterCloggingMalfunction.FilterData>(gameData.FilterData);
+                BindSameForAll<FanController, FanOverpoweredMalfunction.FanData>(gameData.FanData);
+            }
         }
-        
+
         void Bind<T, TData>(TData data) where T : MonoBehaviour, IBind<TData> where TData : ISaveable, new() {
             var entity = FindObjectsByType<T>(FindObjectsInactive.Include, FindObjectsSortMode.None).FirstOrDefault();
             if (entity != null) {
@@ -58,6 +65,21 @@ namespace Systems.Persistence {
                     data = new TData { Id = entity.Id };
                 }
                 entity.Bind(data);
+            }
+        }
+
+        void BindSameForAll<T, TData>(TData data) where T : MonoBehaviour, IBind<TData> where TData : ISaveable, new()
+        {
+            var entities = FindObjectsByType<T>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            Debug.Log(entities.Length);
+            foreach (var entity in entities)
+            {
+                if (entity != null) {
+                    if (data == null) {
+                        data = new TData { Id = entity.Id };
+                    }
+                    entity.Bind(data);
+                }
             }
         }
 
@@ -105,7 +127,7 @@ namespace Systems.Persistence {
         public void NewGame() {
             gameData = new GameData {
                 Name = "Game",
-                CurrentLevelName = "SampleScene 1"
+                CurrentLevelName = "SampleScene"
             };
             SceneManager.LoadScene(gameData.CurrentLevelName);
         }
@@ -116,7 +138,7 @@ namespace Systems.Persistence {
             gameData = dataService.Load(gameName);
 
             if (String.IsNullOrWhiteSpace(gameData.CurrentLevelName)) {
-                gameData.CurrentLevelName = "SampleScene 1";
+                gameData.CurrentLevelName = "SampleScene";
             }
 
             SceneManager.LoadScene(gameData.CurrentLevelName);
@@ -125,5 +147,17 @@ namespace Systems.Persistence {
         public void ReloadGame() => LoadGame(gameData.Name);
 
         public void DeleteGame(string gameName) => dataService.Delete(gameName);
+
+        [ContextMenu(nameof(Test))]
+        private void Test()
+        {
+            var entity = FindObjectsByType<FanController>(FindObjectsInactive.Include, FindObjectsSortMode.None).FirstOrDefault();
+            if(entity == null)
+                Debug.Log("FAN CONTROLLER NULL");
+            else
+            {
+                Debug.Log("FAN CONTROLLER NOT NULL");
+            }
+        }
     }
 }

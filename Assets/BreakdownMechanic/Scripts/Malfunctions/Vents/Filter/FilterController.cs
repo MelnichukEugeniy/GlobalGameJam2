@@ -17,6 +17,13 @@ public class FilterController : MonoBehaviour, IInteractable, ILookInteractable,
     private List<FixAction> runtimeFixActions;
     private FilterCloggingMalfunction.FilterData data;
 
+    [SerializeField]
+    private GameObject dirtyFilter;
+
+    [SerializeField]
+    private GameObject cleanFilter;
+    
+
     public SerializableGuid Id { get; set; }
 
     private void Awake()
@@ -77,6 +84,8 @@ public class FilterController : MonoBehaviour, IInteractable, ILookInteractable,
         
         data.cloggingValue.OnChanged += OnCloggingValueChanged;
         data.state.OnChanged += OnMalfunctionStateChanged;
+        OnCloggingValueChanged(data.cloggingValue.Value);
+        OnMalfunctionStateChanged(data.state.Value);
         Debug.Log($"Bind data for {GetType().Name}");
     }
 
@@ -84,7 +93,13 @@ public class FilterController : MonoBehaviour, IInteractable, ILookInteractable,
     {
         if (obj == EMalfunctionState.Detected)
         {
-            
+            dirtyFilter.SetActive(true);
+            cleanFilter.SetActive(false);
+        }
+        else if(obj == EMalfunctionState.Undetected)
+        {
+            dirtyFilter.SetActive(false);
+            cleanFilter.SetActive(true);
         }
     }
 
@@ -98,7 +113,10 @@ public class FilterController : MonoBehaviour, IInteractable, ILookInteractable,
 
     private void OnDestroy()
     {
-        data.cloggingValue.OnChanged -= OnCloggingValueChanged;
-        data.state.OnChanged -= OnMalfunctionStateChanged;
+        if (data != null)
+        {
+            data.cloggingValue.OnChanged -= OnCloggingValueChanged;
+            data.state.OnChanged -= OnMalfunctionStateChanged;
+        }
     }
 }
